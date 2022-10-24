@@ -3,10 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.infenion</groupId>
+        <artifactId>ccmaServices</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.infenion</groupId>
     <artifactId>ccmaDataServices</artifactId>
@@ -18,11 +17,7 @@
         <h2.version>2.1.210</h2.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.infenion</groupId>
-            <artifactId>ccmaModel</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -43,6 +38,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.infenion</groupId>
+            <artifactId>ccmaModel</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

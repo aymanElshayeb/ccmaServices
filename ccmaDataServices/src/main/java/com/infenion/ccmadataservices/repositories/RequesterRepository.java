@@ -1,5 +1,6 @@
 package com.infenion.ccmadataservices.repositories;
 
+
 import com.infenion.ccmamodel.model.Requester;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -37,13 +37,7 @@
         </dependency>
         <dependency>
             <groupId>com.infenion</groupId>
-            <artifactId>ccmaIntegeration</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.infenion</groupId>
-            <artifactId>ccmaServices</artifactId>
+            <artifactId>ccmaLogic</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

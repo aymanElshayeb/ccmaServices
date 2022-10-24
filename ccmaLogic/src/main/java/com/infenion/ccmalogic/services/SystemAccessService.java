@@ -1,4 +1,4 @@
-package com.infenion.ccmaservices.services;
+package com.infenion.ccmalogic.services;
 
 
 import com.infenion.ccmadataservices.repositories.SystemAccessRepository;

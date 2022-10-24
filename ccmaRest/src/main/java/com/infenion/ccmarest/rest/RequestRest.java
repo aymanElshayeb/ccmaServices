@@ -1,7 +1,7 @@
 package com.infenion.ccmarest.rest;
 
 import com.infenion.ccmamodel.model.Request;
-import com.infenion.ccmaservices.services.RequestService;
+import com.infenion.ccmalogic.services.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/request")
 public class RequestRest {
-    @Autowired
+    @Autowired(required = false)
     private RequestService requestService;
 
     @GetMapping("/{id}")
-    public Request getRequest(@PathVariable long id) {
+    public Request getRequest(@PathVariable("id") long id) {
         return requestService.findById(id);
     }
     @GetMapping("/")

@@ -2,7 +2,7 @@ package com.infenion.ccmarest.rest;
 
 
 import com.infenion.ccmamodel.model.Requester;
-import com.infenion.ccmaservices.services.RequesterService;
+import com.infenion.ccmalogic.services.RequesterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +12,11 @@ import java.util.List;
 @RequestMapping("/requester")
 public class RequesterRest {
 
-    @Autowired
+    @Autowired(required = false)
     private RequesterService requesterService;
 
     @GetMapping("/{requesterUserName}")
-    public Requester findByUserName(@PathVariable String requesterUserName) {
+    public Requester findByUserName(@PathVariable("requesterUserName") String requesterUserName) {
         return requesterService.findByUserName(requesterUserName);
     }
     @GetMapping("/")
@@ -24,7 +24,7 @@ public class RequesterRest {
         return requesterService.findAll();
     }
     @GetMapping("/contains/{requesterUserName}")
-    public List<Requester> getRequestersByUsernameContains(@PathVariable String requesterUserName) {
+    public List<Requester> getRequestersByUsernameContains(@PathVariable("requesterUserName") String requesterUserName) {
         return requesterService.findByUserNameContains(requesterUserName);
     }
     @PostMapping("/")
