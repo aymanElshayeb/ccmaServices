@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SystemAccessService {
@@ -17,7 +18,7 @@ public class SystemAccessService {
         return  systemAccessRepository.findBySystemName(systemName);
     }
 
-    public SystemAccess findById(long id) {
+    public Optional<SystemAccess> findById(Long id) {
         return  systemAccessRepository.findById(id);
     }
 

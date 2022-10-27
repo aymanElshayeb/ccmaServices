@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequestService {
@@ -20,7 +21,7 @@ public class RequestService {
     @Autowired
     private ProjectService projectService;
 
-    public Request findById(long requestId) {
+    public Optional<Request> findById(Long requestId) {
         return requestRepository.findById(requestId);
     }
 
@@ -29,18 +30,7 @@ public class RequestService {
     }
 
     public Request save(Request request) {
-        Requester requester = requesterService.findById(request.getRequester().getId());
-        SystemAccess systemAccess= systemAccessService.findById(request.getSystemAccess().getId());
-        Project project = projectService.findById(request.getProject().getId());
-//        request.setId(-1);
-//        request.setRequester(requester);
-//        request.setSystemAccess(systemAccess);
-//        request.setProject(project);
-//        request.setStatus(Status.DRAFT);
-//        request.setLastModifier(requester);
-//        request.setLastModifiedDate(Calendar.getInstance().getTime());
-//        request.setCreationDate(Calendar.getInstance().getTime());
-        return requestRepository.save(request);
+     return null;
     }
 
     public Request update(Request request) {

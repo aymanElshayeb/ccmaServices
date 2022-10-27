@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class ProjectRole extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Enumerated(EnumType.STRING)
     private Role role;

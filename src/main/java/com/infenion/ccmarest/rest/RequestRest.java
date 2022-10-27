@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/request")
@@ -14,7 +15,7 @@ public class RequestRest {
     private RequestService requestService;
 
     @GetMapping("/{id}")
-    public Request getRequest(@PathVariable("id") long id) {
+    public Optional<Request> getRequest(@PathVariable("id") Long id) {
         return requestService.findById(id);
     }
     @GetMapping("/")
@@ -26,7 +27,7 @@ public class RequestRest {
         return requestService.save(request);
     }
     @PutMapping ("/")
-    public Request update(Request request) {
+    public Request update(@RequestBody Request request) {
         return requestService.update(request);
     }
 }

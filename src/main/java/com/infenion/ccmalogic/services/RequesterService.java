@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequesterService {
@@ -21,7 +22,7 @@ public class RequesterService {
         return requesterRepository.findByUserName(requesterName);
     }
 
-    public Requester findById(long id) {
+    public Optional<Requester> findById(Long id) {
         return requesterRepository.findById(id);
     }
     public List<Requester> findByUserNameContains(String requesterName) {

@@ -26,8 +26,8 @@ INSERT INTO Requester_Access (ID, requester_id, system_access_id) VALUES (2, 2,6
 
 ------------------------------ Request-------------------------------------
 INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
-VALUES (1, 2, 3, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
+VALUES (default, 2, 3, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
 
 INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
-VALUES (2, 2, 6, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
+VALUES (default, 2, 6, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
 
