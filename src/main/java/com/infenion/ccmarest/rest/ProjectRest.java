@@ -12,7 +12,7 @@ import java.util.List;
 @RestController()
 @RequestMapping("/project")
 public class ProjectRest {
-    @Autowired(required = false)
+    @Autowired
     private ProjectService projectService;
     @GetMapping("/")
     public List<Project> getAllProjects() {

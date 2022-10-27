@@ -1,16 +1,18 @@
 package com.infenion.ccmamodel.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
 public class Project extends BaseEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "subProjectID")
-    private Project subProject;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String jiraId;
+
 
     public Project() {
     }
@@ -31,11 +33,11 @@ public class Project extends BaseEntity {
         this.name = name;
     }
 
-    public Project getSubProject() {
-        return subProject;
+    public String getJiraId() {
+        return jiraId;
     }
 
-    public void setSubProject(Project subProject) {
-        this.subProject = subProject;
+    public void setJiraId(String jiraId) {
+        this.jiraId = jiraId;
     }
 }

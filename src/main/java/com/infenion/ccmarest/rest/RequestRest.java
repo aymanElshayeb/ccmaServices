@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/request")
 public class RequestRest {
-    @Autowired(required = false)
+    @Autowired
     private RequestService requestService;
 
     @GetMapping("/{id}")
@@ -22,7 +22,7 @@ public class RequestRest {
         return requestService.findAll();
     }
     @PostMapping("/")
-    public Request save(Request request) {
+    public Request save(@RequestBody Request request) {
         return requestService.save(request);
     }
     @PutMapping ("/")

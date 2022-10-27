@@ -1,9 +1,9 @@
 package com.infenion.ccmamodel.model;
 
-public enum Status {
-    DRAFT("DRAFT"), PENDING("PENDING"),COMPLETED("COMPLETED");
+public enum AccessPermission {
+    READ("READ ACCESS"), WRITE("WRITE ACCESS"), ADMIN("ADMIN ACCESS");
     private String name;
-    Status(String name) {
+    AccessPermission(String name) {
         this.setName( name);
     }
 

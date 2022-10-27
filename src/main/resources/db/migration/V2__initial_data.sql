@@ -1,11 +1,33 @@
-INSERT INTO System_Access (ID, systemID, accessID) VALUES (1, 'JIRA', 'READ ACCESS');
-INSERT INTO System_Access (ID, systemID, accessID) VALUES (2, 'JIRA', 'WRITE ACCESS');
-INSERT INTO System_Access (ID, systemID, accessID) VALUES (3, 'JIRA', 'ADMIN ACCESS');
-INSERT INTO System_Access (ID, systemID, accessID) VALUES (4, 'SVN', 'READ ACCESS');
-INSERT INTO System_Access (ID, systemID, accessID) VALUES (5, 'SVN', 'WRITE ACCESS');
-INSERT INTO System_Access (ID, systemID, accessID) VALUES (6, 'SVN', 'ADMIN ACCESS');
+---------------------------------- Project-------------------------
+INSERT INTO Project (ID, name, jira_id) VALUES (1, 'CTRX Radar Family [CTRXFAMILY]', '411600');
 
-INSERT INTO Request (ID, requesterID, systemAccessID, StatusID, projectID, subProjectID)
-VALUES (1, 'elshayeb', 1, 'DRAFT','CTRX Rader Family',null);
-INSERT INTO Request (ID, requesterID, systemAccessID, StatusID, projectID, subProjectID)
-VALUES (2, 'LNZautomationuser', 3, 'DRAFT','CTRX Rader Family',null);
+---------------------------------- Requester-------------------------
+INSERT INTO Requester (ID, user_name, email, full_name, password)
+VALUES (1, 'elshayeb', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123');
+
+INSERT INTO Requester (ID, user_name, email, full_name, password)
+VALUES (2, 'lnzautomationuser', 'no.mail@nomail.nomail','LNZautomationuser None (IFL ATV SC D RAD PJM)','z.Cve%{6p.fjR%o');
+
+--------------------------------------System Access----------------------------------
+INSERT INTO System_Access (ID, system_name, access_permission) VALUES (1, 'JIRA', 'READ');
+INSERT INTO System_Access (ID, system_name, access_permission) VALUES (2, 'JIRA', 'WRITE');
+INSERT INTO System_Access (ID, system_name, access_permission) VALUES (3, 'JIRA', 'ADMIN');
+INSERT INTO System_Access (ID, system_name, access_permission) VALUES (4, 'SVN', 'READ');
+INSERT INTO System_Access (ID, system_name, access_permission) VALUES (5, 'SVN', 'WRITE');
+INSERT INTO System_Access (ID, system_name, access_permission) VALUES (6, 'SVN', 'ADMIN');
+
+---------------------------------- Project Role-------------------------
+INSERT INTO PROJECT_ROLE (ID, requester_id, project_id,role) VALUES (1, 1,1,'MEMBER');
+INSERT INTO PROJECT_ROLE (ID, requester_id, project_id,role) VALUES (2, 2,1,'MANAGER');
+
+---------------------------------- Project ACCESS-------------------------
+INSERT INTO Requester_Access (ID, requester_id, system_access_id) VALUES (1, 2,3);
+INSERT INTO Requester_Access (ID, requester_id, system_access_id) VALUES (2, 2,6);
+
+------------------------------ Request-------------------------------------
+INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
+VALUES (1, 2, 3, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
+
+INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
+VALUES (2, 2, 6, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
+

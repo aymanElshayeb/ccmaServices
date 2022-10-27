@@ -20,6 +20,10 @@ public class RequesterService {
     public Requester findByUserName(String requesterName) {
         return requesterRepository.findByUserName(requesterName);
     }
+
+    public Requester findById(long id) {
+        return requesterRepository.findById(id);
+    }
     public List<Requester> findByUserNameContains(String requesterName) {
         return requesterRepository.findByUserNameContains(requesterName);
     }

@@ -3,45 +3,44 @@ package com.infenion.ccmamodel.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class SystemAccess {
+public class SystemAccess extends BaseEntity{
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id ;
-    private  String systemID;
-    private String accessID;
+    @Enumerated(EnumType.STRING)
+    private  SystemName systemName;
+    @Enumerated(EnumType.STRING)
+    private AccessPermission accessPermission;
 
-    public SystemAccess(String systemID, String accessID) {
-        this.systemID = systemID;
-        this.accessID = accessID;
-    }
 
     public SystemAccess() {}
 
-    public String getSystemID() {
-        return systemID;
+
+    public long getId() {
+        return id;
     }
 
-    public void setSystemID(String systemID) {
-        this.systemID = systemID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getAccessID() {
-        return accessID;
+    public AccessPermission getAccessPermission() {
+        return accessPermission;
     }
 
-    public void setAccessID(String accessID) {
-        this.accessID = accessID;
+    public void setAccessPermission(AccessPermission accessPermission) {
+        this.accessPermission = accessPermission;
     }
-    @Override
-    public String toString() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        return gson.toJson(this);
+
+    public SystemName getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(SystemName systemName) {
+        this.systemName = systemName;
     }
 }
 

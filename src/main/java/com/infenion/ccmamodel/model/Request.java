@@ -1,35 +1,36 @@
 package com.infenion.ccmamodel.model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javax.persistence.*;
-
+import java.util.Date;
 
 
 @Entity
 public class Request extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String requesterID;
+
     @ManyToOne
-    @JoinColumn(name = "systemaccessID")
+    @JoinColumn(name = "requester_Id")
+    private Requester requester;
+
+    @ManyToOne
+    @JoinColumn(name = "system_access_id")
     private SystemAccess systemAccess;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-    private String projectID;
-    private String subprojectID;
 
-    public Request(String requesterID, SystemAccess systemAccess, String statusID, String projectID, String subProjectID) {
-        this.requesterID = requesterID;
-        this.systemAccess = systemAccess;
-        this.status = status;
-        this.projectID = projectID;
-        this.subprojectID = subProjectID;
-    }
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    public Request() {
-    }
+    private Date creationDate;
+    private Date lastModifiedDate;
+    @ManyToOne
+    @JoinColumn(name = "last_modifier_Id")
+    private Requester lastModifier;
 
     public long getId() {
         return id;
@@ -39,12 +40,12 @@ public class Request extends BaseEntity{
         this.id = id;
     }
 
-    public String getRequesterID() {
-        return requesterID;
+    public Requester getRequester() {
+        return requester;
     }
 
-    public void setRequesterID(String requesterID) {
-        this.requesterID = requesterID;
+    public void setRequester(Requester requesterID) {
+        this.requester = requesterID;
     }
 
     public SystemAccess getSystemAccess() {
@@ -63,21 +64,35 @@ public class Request extends BaseEntity{
         this.status = status;
     }
 
-    public String getProjectID() {
-        return projectID;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectID(String projectID) {
-        this.projectID = projectID;
+    public void setProject(Project projectID) {
+        this.project = projectID;
     }
 
-    public String getSubprojectID() {
-        return subprojectID;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setSubprojectID(String subprojectID) {
-        this.subprojectID = subprojectID;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Requester getLastModifier() {
+        return lastModifier;
+    }
+
+    public void setLastModifier(Requester lastModifier) {
+        this.lastModifier = lastModifier;
+    }
 }

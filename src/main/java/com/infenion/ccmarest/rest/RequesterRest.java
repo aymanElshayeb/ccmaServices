@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/requester")
 public class RequesterRest {
 
-    @Autowired(required = false)
+    @Autowired
     private RequesterService requesterService;
 
     @GetMapping("/{requesterUserName}")

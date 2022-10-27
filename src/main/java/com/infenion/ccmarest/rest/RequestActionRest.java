@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/requestAction")
 public class RequestActionRest {
-    @Autowired(required = false)
+    @Autowired
     private RequestActionService requestActionService;
 
     @PostMapping("/saveAsDraft/{requestId}")

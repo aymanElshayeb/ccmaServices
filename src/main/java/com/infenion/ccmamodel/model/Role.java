@@ -1,9 +1,9 @@
 package com.infenion.ccmamodel.model;
 
-public enum Status {
-    DRAFT("DRAFT"), PENDING("PENDING"),COMPLETED("COMPLETED");
+public enum Role {
+    MEMBER("MEMBER"), MANAGER("MANAGER");
     private String name;
-    Status(String name) {
+    Role(String name) {
         this.setName( name);
     }
 

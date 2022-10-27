@@ -11,5 +11,7 @@ public interface RequesterRepository extends JpaRepository<Requester, Long> {
     public List<Requester> findAll();
     public List<Requester> findByUserNameContains(String userName);
     public Requester findByUserName(String userName);
+    public Requester findById(long id);
+
     public Requester save(Requester requester);
 }
