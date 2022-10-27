@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExecutionService {
     public void execute(Request request) throws Exception{
-        System.out.println("Executed Sucessfully "+ request);
+        System.out.println("Executed Successfully "+ request);
     }
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class Project extends BaseEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
     private String name;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

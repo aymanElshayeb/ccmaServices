@@ -8,9 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface  SystemAccessRepository extends JpaRepository<SystemAccess, Long> {
-    public SystemAccess findById(long id);
-    public List<SystemAccess> findAll();
-    public List<SystemAccess> findBySystemName(SystemName systemName);
-
-    public SystemAccess save(SystemAccess systemAccess);
+    List<SystemAccess> findBySystemName(SystemName systemName);
 }
