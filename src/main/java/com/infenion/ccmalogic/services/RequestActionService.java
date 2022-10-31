@@ -26,42 +26,53 @@ public class RequestActionService {
     private ProjectRepository projectRepository;
 
     public Request saveAsDraft(Request request) {
-        request.setId(null);
         return changeStatusAndUpdate(request, Status.DRAFT,true);
     }
 
     public Request submit(Request request)  {
-        return changeStatusAndUpdate(request, Status.PENDING, true);
+        return changeStatusAndUpdate(request, Status.PENDING, false);
 
     }
 
     public Request execute(Request request)  {
         try{
             executionService.execute(request);
-            return changeStatusAndUpdate(request, Status.COMPLETED, true);
+            return changeStatusAndUpdate(request, Status.COMPLETED, false);
         } catch(Exception ex){
-            return changeStatusAndUpdate(request, Status.PENDING, true);
+            return changeStatusAndUpdate(request, Status.PENDING, false);
         }
 
     }
 
     public Request changeStatusAndUpdate(Request request, Status status, boolean canInsert) {
 
-
         Optional<Request> newRequest = Optional.empty();
-        if(canInsert){
+        Optional<Requester> requester =Optional.empty();
+        Optional<Requester>  lastModifier = Optional.empty();
+        Optional<SystemAccess> systemAccess= Optional.empty();
+        Optional<Project> project = Optional.empty();
+
+
             if(request.getId() !=null){
                 newRequest =requestRepository.findById(request.getId());
-            } else {
+            } else if(canInsert){
                 newRequest= Optional.of(newRequest.orElseGet(()->getNewRequest()));
             }
 
+        if(request.getRequester()!=null ){
+            requester = requesterRepository.findById(request.getRequester().getId());
         }
 
-        Optional<Requester> requester = requesterRepository.findById(request.getRequester().getId());
-        Optional<Requester>  lastModifier = requesterRepository.findById(request.getLastModifier().getId());
-        Optional<SystemAccess> systemAccess= systemAccessRepository.findById(request.getSystemAccess().getId());
-        Optional<Project> project = projectRepository.findById(request.getProject().getId());
+        if(request.getLastModifier()!=null ){
+            lastModifier = requesterRepository.findById(request.getLastModifier().getId());
+        }
+        if(request.getSystemAccess()!=null ){
+            systemAccess= systemAccessRepository.findById(request.getSystemAccess().getId());
+        }
+        if(request.getProject()!=null ){
+            project= projectRepository.findById(request.getProject().getId());
+        }
+
 
 
         Optional<Request> finalNewRequest = newRequest;
@@ -69,11 +80,12 @@ public class RequestActionService {
         lastModifier.ifPresent((value)->finalNewRequest.get().setLastModifier(value));
         systemAccess.ifPresent((value)->finalNewRequest.get().setSystemAccess(value));
         project.ifPresent((value)->finalNewRequest.get().setProject(value));
+
         if(status !=null){
-            newRequest.get().setStatus(status);
+            finalNewRequest.get().setStatus(status);
         }
-        newRequest.get().setLastModifiedDate(Calendar.getInstance().getTime());
-        return requestRepository.save(newRequest.get());
+        finalNewRequest.get().setLastModifiedDate(Calendar.getInstance().getTime());
+        return requestRepository.save(finalNewRequest.get());
     }
 
     private Request getNewRequest() {
@@ -83,6 +95,6 @@ public class RequestActionService {
     }
 
     public Request returnToRequester(Request request) {
-        return changeStatusAndUpdate(request, Status.DRAFT, true);
+        return changeStatusAndUpdate(request, Status.DRAFT, false);
     }
 }
