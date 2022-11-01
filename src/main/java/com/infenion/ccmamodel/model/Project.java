@@ -12,6 +12,12 @@ public class Project extends BaseEntity {
     private String name;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jiraId;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String readRoleId;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String writeRoleId;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String adminRoleId;
 
 
     public Project() {
@@ -39,5 +45,14 @@ public class Project extends BaseEntity {
 
     public void setJiraId(String jiraId) {
         this.jiraId = jiraId;
+    }
+
+    public String getJiraRoleId(AccessPermission accessPermission) {
+        switch (accessPermission){
+            case READ: return this.readRoleId;
+            case WRITE: return this.writeRoleId;
+            case ADMIN: return this.adminRoleId;
+            default: return null;
+        }
     }
 }

@@ -1,12 +1,13 @@
 ---------------------------------- Project-------------------------
-INSERT INTO Project (ID, name, jira_id) VALUES (1, 'CTRX Radar Family [CTRXFAMILY]', '411600');
+INSERT INTO Project (ID, name, jira_id, read_role_id, write_role_id, admin_role_id)
+ VALUES (default, 'CTRX Radar Family [CTRXFAMILY]', '68500', '11800', '10001', '10002');
 
 ---------------------------------- Requester-------------------------
 INSERT INTO Requester (ID, user_name, email, full_name, password)
-VALUES (1, 'elshayeb', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123');
+VALUES (default, 'elshayeb', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123');
 
 INSERT INTO Requester (ID, user_name, email, full_name, password)
-VALUES (2, 'lnzautomationuser', 'no.mail@nomail.nomail','LNZautomationuser None (IFL ATV SC D RAD PJM)','z.Cve%{6p.fjR%o');
+VALUES (default, 'lnzautomationuser', 'no.mail@nomail.nomail','LNZautomationuser None (IFL ATV SC D RAD PJM)','z.Cve%{6p.fjR%o');
 
 --------------------------------------System Access----------------------------------
 INSERT INTO System_Access (ID, system_name, access_permission) VALUES (1, 'JIRA', 'READ');

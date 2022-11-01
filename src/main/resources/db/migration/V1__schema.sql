@@ -2,7 +2,10 @@
 CREATE TABLE Project (
                            ID bigint auto_increment PRIMARY KEY,
                            name varchar(255),
-                           jira_id varchar(255)
+                           jira_id varchar(255),
+                           read_role_id varchar(255),
+                           write_role_id varchar(255),
+                           admin_role_id varchar(255)
 );
 
 CREATE TABLE Requester (
