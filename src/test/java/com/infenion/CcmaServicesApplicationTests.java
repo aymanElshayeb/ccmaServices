@@ -17,7 +17,7 @@ class CcmaServicesApplicationTests {
     @Test
     void contextLoads() {
     }
-    @Test
+
     void addWriteAccessJiraTest() throws Exception {
         Request request = new Request();
         Project project = new Project();
