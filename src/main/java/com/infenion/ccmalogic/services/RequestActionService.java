@@ -1,14 +1,16 @@
-package com.infenion.ccmalogic.services;
+ package com.infenion.ccmalogic.services;
 
 import com.infenion.ccmadataservices.repositories.ProjectRepository;
 import com.infenion.ccmadataservices.repositories.RequestRepository;
 import com.infenion.ccmadataservices.repositories.RequesterRepository;
 import com.infenion.ccmadataservices.repositories.SystemAccessRepository;
 import com.infenion.ccmamodel.model.*;
-import com.sun.deploy.cache.CacheEntry;
+//import com.sun.deploy.cache.CacheEntry;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -19,17 +21,29 @@ public class RequestActionService {
     @Autowired
     ExecutionService executionService;
     @Autowired
+    MailService mailService;
+    @Autowired
     private RequesterRepository requesterRepository;
     @Autowired
     private SystemAccessRepository systemAccessRepository;
     @Autowired
     private ProjectRepository projectRepository;
 
-    public Request saveAsDraft(Request request) {
-        return changeStatusAndUpdate(request, Status.DRAFT,true);
+
+    public Request saveAsDraft(Request request) throws MessagingException {
+
+        Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
+
+        mailService.sendMail("nabilmokhtar15@gmail.com","first mail",
+                r.getRequester().getId(),r.getProject().getId(),r.getId());
+        return r ;
     }
 
-    public Request submit(Request request)  {
+    public Request submit(Request request) throws MessagingException {
+
+        mailService.sendMail("nabilmokhtar15@gmail.com","frist mail",
+                request.getRequester().getId(),request.getProject().getId(), request.getId());
+
         return changeStatusAndUpdate(request, Status.PENDING, false);
 
     }

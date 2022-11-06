@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  <title>Request </title>
+</head>
+<body>
+
+<div class="w3-container">
+  <h2>Project ID : <b th:text="${projectId}"></b></h2>
+
+  <div class="w3-card-4 w3-dark-grey" style="width:50%">
+
+    <div class="w3-container w3-center">
+      <h3>Request  ID : <b th:text="${requestId}"></b></h3>
+      <img src="https://www.infineon.com/frontend/release_2022-10-1/dist/resources/img/logo-desktop-en.png" alt="Avatar" style="width:80%">
+      <h5>Requester ID :<b th:text="${requesterId}"></b></h5>
+
+      <div class="w3-section">
+        <button class="w3-button w3-green">Accept</button>
+        <button class="w3-button w3-red">Decline</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
+</html>
