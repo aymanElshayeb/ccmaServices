@@ -21,17 +21,21 @@ public class MailService {
 
 
 
-    public String sendMail(String address ,String subject, long requesterId,long projectId,long requestId) throws MessagingException {
+    public String sendMail(String address ,String requesterName,String ProjectName, long requesterId,long projectId,long requestId,String accessPermission,String systemName) throws MessagingException {
         Context context = new Context();
         context.setVariable("projectId", projectId);
         context.setVariable("requestId", requestId);
         context.setVariable("requesterId", requesterId);
-
+        context.setVariable("requesterName", requesterName);
+        context.setVariable("ProjectName", ProjectName);
+        context.setVariable("accessPermission", accessPermission);
+        context.setVariable("systemName", systemName);
 
         String process = templateEngine.process("request", context);
         javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
-        helper.setSubject(subject);
+        helper.setSubject("access request for project : "+ProjectName+" from "+requesterName);
+
         helper.setText(process, true);
         helper.setTo(address);
         javaMailSender.send(mimeMessage);
