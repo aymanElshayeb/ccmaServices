@@ -114,4 +114,8 @@ public class RequestActionService {
     public Request returnToRequester(Request request) {
         return changeStatusAndUpdate(request, Status.DRAFT, false);
     }
+    public Request returnToRequesterFromMail(Long request) {
+        Request r=requestRepository.findById(request).get();
+        return changeStatusAndUpdate(r, Status.DRAFT, false);
+    }
 }
