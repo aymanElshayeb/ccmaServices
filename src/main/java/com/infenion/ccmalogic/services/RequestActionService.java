@@ -33,7 +33,7 @@ public class RequestActionService {
     public Request saveAsDraft(Request request) throws MessagingException {
 
         Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
-
+        // TODO :: replace address  with project manager address
         mailService.sendMail("nabilmokhtar15@gmail.com",r.getRequester().getUserName()
                 , r.getProject().getName(),r.getRequester().getId(),r.getProject().getId(),r.getId(),
                 r.getSystemAccess().getAccessPermission().toString(),r.getSystemAccess().getSystemName().toString());
@@ -42,7 +42,7 @@ public class RequestActionService {
 
     public Request submit(Request request) throws MessagingException {
         Request r=changeStatusAndUpdate(request, Status.PENDING,false);
-
+        // TODO :: replace address  with project manager address
         mailService.sendMail("nabilmokhtar15@gmail.com",r.getRequester().getUserName()
                 , r.getProject().getName(),r.getRequester().getId(),r.getProject().getId(),r.getId(),
                 r.getSystemAccess().getAccessPermission().toString(),r.getSystemAccess().getSystemName().toString());
