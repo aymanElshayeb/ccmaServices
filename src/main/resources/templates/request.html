@@ -13,18 +13,31 @@
 <body>
 
 <div class="w3-container">
-  <h2>Project ID : <b th:text="${projectId}"></b></h2>
+  <h2>Project Name : <b th:text="${ProjectName}"></b></h2>
 
   <div class="w3-card-4 w3-dark-grey" style="width:50%">
 
     <div class="w3-container w3-center">
-      <h3>Request  ID : <b th:text="${requestId}"></b></h3>
+      <h3>
+        Requester : <b th:text="${requesterName}" ></b>
+        wants to have <b th:text="${accessPermission}"></b>
+        access on <b th:text="${systemName}"></b>
+        system of Project : <b th:text="${ProjectName}"></b>
+      </h3>
+
+      <h3>Requester ID :<b th:text="${requesterId}"></b></h3>
       <img src="https://www.infineon.com/frontend/release_2022-10-1/dist/resources/img/logo-desktop-en.png" alt="Avatar" style="width:80%">
-      <h5>Requester ID :<b th:text="${requesterId}"></b></h5>
+
 
       <div class="w3-section">
-        <button class="w3-button w3-green">Accept</button>
-        <button class="w3-button w3-red">Decline</button>
+        <button class="w3-button w3-green">Approve</button>
+        <button class="w3-button w3-red" href="${pageContext.servletContext.contextPath}/requestAction/returnToRequesterFormMail/1">ReturnToRequester</button>
+
+        <form action="${pageContext.servletContext.contextPath}/requestAction/returnToRequesterFormMail/" method="POST">
+          <button>Submit</button>
+          <input>
+        </form>
+
       </div>
     </div>
 
