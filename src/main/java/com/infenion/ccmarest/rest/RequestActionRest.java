@@ -30,4 +30,9 @@ public class RequestActionRest {
     public Request returnToRequester(@RequestBody  Request request){
          return requestActionService.returnToRequester(request);
     }
+
+    @PostMapping("/returnToRequesterFormMail/")
+    public Request returnToRequester(@RequestBody  Long request){
+        return requestActionService.returnToRequesterFromMail(request);
+    }
 }
