@@ -34,17 +34,20 @@ public class RequestActionService {
 
         Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
 
-        mailService.sendMail("nabilmokhtar15@gmail.com","first mail",
-                r.getRequester().getId(),r.getProject().getId(),r.getId());
+        mailService.sendMail("nabilmokhtar15@gmail.com",r.getRequester().getUserName()
+                , r.getProject().getName(),r.getRequester().getId(),r.getProject().getId(),r.getId(),
+                r.getSystemAccess().getAccessPermission().toString(),r.getSystemAccess().getSystemName().toString());
         return r ;
     }
 
     public Request submit(Request request) throws MessagingException {
+        Request r=changeStatusAndUpdate(request, Status.PENDING,false);
 
-        mailService.sendMail("nabilmokhtar15@gmail.com","frist mail",
-                request.getRequester().getId(),request.getProject().getId(), request.getId());
+        mailService.sendMail("nabilmokhtar15@gmail.com",r.getRequester().getUserName()
+                , r.getProject().getName(),r.getRequester().getId(),r.getProject().getId(),r.getId(),
+                r.getSystemAccess().getAccessPermission().toString(),r.getSystemAccess().getSystemName().toString());
 
-        return changeStatusAndUpdate(request, Status.PENDING, false);
+        return r;
 
     }
 
