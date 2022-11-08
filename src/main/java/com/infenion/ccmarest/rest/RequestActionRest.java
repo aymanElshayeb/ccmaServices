@@ -31,8 +31,18 @@ public class RequestActionRest {
          return requestActionService.returnToRequester(request);
     }
 
-    @PostMapping("/returnToRequesterFormMail/")
-    public Request returnToRequester(@RequestBody  Long request){
-        return requestActionService.returnToRequesterFromMail(request);
+    @GetMapping("/returnToRequesterFormMail/{request}")
+
+    public Request returnToRequester(@PathVariable  String request){
+        return requestActionService.returnToRequesterFromMail(Long.parseLong(request));
     }
+
+
+    @PostMapping("/executeFromMail/{request}")
+    public Request executeFromMail(@PathVariable  Request request) {
+
+        return requestActionService.execute(request);
+    }
+
 }
+
