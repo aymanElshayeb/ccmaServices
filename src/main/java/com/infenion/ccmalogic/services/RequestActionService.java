@@ -125,4 +125,20 @@ public class RequestActionService {
         Request r=requestRepository.findById(request).get();
         return changeStatusAndUpdate(r, Status.DRAFT, false);
     }
+
+
+
+
+    public Request executeFromMail(Long request)  {
+        Request r=requestRepository.findById(request).get();
+        try{
+            executionService.execute(r);
+            return changeStatusAndUpdate(r, Status.COMPLETED, false);
+        } catch(Exception ex){
+            return changeStatusAndUpdate(r, Status.PENDING, false);
+        }
+
+    }
 }
+
+
