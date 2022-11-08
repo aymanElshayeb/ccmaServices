@@ -4,10 +4,10 @@ INSERT INTO Project (ID, name, jira_id, read_role_id, write_role_id, admin_role_
 
 ---------------------------------- Requester-------------------------
 INSERT INTO Requester (ID, user_name, email, full_name, password)
-VALUES (default, 'elshayeb', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123');
+VALUES (default, 'elshayeb', 'elshayeb.exteranl@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123');
 
 INSERT INTO Requester (ID, user_name, email, full_name, password)
-VALUES (default, 'lnzautomationuser', 'no.mail@nomail.nomail','LNZautomationuser None (IFL ATV SC D RAD PJM)','z.Cve%{6p.fjR%o');
+VALUES (default, 'lnzautomationuser', 'elshayeb.exteranl@infineon.com','LNZautomationuser None (IFL ATV SC D RAD PJM)','z.Cve%{6p.fjR%o');
 
 --------------------------------------System Access----------------------------------
 INSERT INTO System_Access (ID, system_name, access_permission) VALUES (1, 'JIRA', 'READ');

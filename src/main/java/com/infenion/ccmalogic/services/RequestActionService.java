@@ -41,7 +41,7 @@ public class RequestActionService {
 
     public Request submit(Request request) throws MessagingException {
 
-        Request r=changeStatusAndUpdate(request, Status.PENDING,false);
+        Request r=changeStatusAndUpdate(request, Status.PENDING,true);
 
         return getRequest(r);
 
