@@ -38,7 +38,7 @@ public class RequestActionRest {
     }
 
 
-    @PostMapping("/executeFromMail/{request}")
+    @GetMapping("/executeFromMail/{request}")
     public Request executeFromMail(@PathVariable  Request request) {
 
         return requestActionService.execute(request);
