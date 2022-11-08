@@ -1,15 +1,15 @@
-package com.infenion.ccmalogic.services;
+ package com.infenion.ccmalogic.services;
 
-import com.infenion.ccmadataservices.repositories.ProjectRepository;
-import com.infenion.ccmadataservices.repositories.RequestRepository;
-import com.infenion.ccmadataservices.repositories.RequesterRepository;
-import com.infenion.ccmadataservices.repositories.SystemAccessRepository;
+import com.infenion.ccmadataservices.repositories.*;
 import com.infenion.ccmamodel.model.*;
-import com.sun.deploy.cache.CacheEntry;
+//import com.sun.deploy.cache.CacheEntry;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,19 +19,43 @@ public class RequestActionService {
     @Autowired
     ExecutionService executionService;
     @Autowired
+    MailService mailService;
+    @Autowired
     private RequesterRepository requesterRepository;
     @Autowired
     private SystemAccessRepository systemAccessRepository;
     @Autowired
     private ProjectRepository projectRepository;
 
-    public Request saveAsDraft(Request request) {
-        return changeStatusAndUpdate(request, Status.DRAFT,true);
+    @Autowired
+    private  ProjectRoleRepository projectRoleRepository;
+
+
+
+    public Request saveAsDraft(Request request) throws MessagingException {
+
+        Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
+
+        return getRequest(r);
     }
 
-    public Request submit(Request request)  {
-        return changeStatusAndUpdate(request, Status.PENDING, false);
+    public Request submit(Request request) throws MessagingException {
 
+        Request r=changeStatusAndUpdate(request, Status.PENDING,false);
+
+        return getRequest(r);
+
+    }
+
+    private Request getRequest(Request request) throws MessagingException {
+        List<ProjectRole> managers= projectRoleRepository.findByProject(request.getProject());
+
+        for (ProjectRole p :managers) {
+            if (p.getRole().toString()=="MANAGER") {
+                mailService.sendMail(p.getRequester().getEmail(),request);
+            }
+        }
+        return request;
     }
 
     public Request execute(Request request)  {
@@ -97,4 +121,24 @@ public class RequestActionService {
     public Request returnToRequester(Request request) {
         return changeStatusAndUpdate(request, Status.DRAFT, false);
     }
+    public Request returnToRequesterFromMail(Long request) {
+        Request r=requestRepository.findById(request).get();
+        return changeStatusAndUpdate(r, Status.DRAFT, false);
+    }
+
+
+
+
+    public Request executeFromMail(Long request)  {
+        Request r=requestRepository.findById(request).get();
+        try{
+            executionService.execute(r);
+            return changeStatusAndUpdate(r, Status.COMPLETED, false);
+        } catch(Exception ex){
+            return changeStatusAndUpdate(r, Status.PENDING, false);
+        }
+
+    }
 }
+
+
