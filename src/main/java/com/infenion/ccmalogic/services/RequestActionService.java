@@ -1,9 +1,6 @@
  package com.infenion.ccmalogic.services;
 
-import com.infenion.ccmadataservices.repositories.ProjectRepository;
-import com.infenion.ccmadataservices.repositories.RequestRepository;
-import com.infenion.ccmadataservices.repositories.RequesterRepository;
-import com.infenion.ccmadataservices.repositories.SystemAccessRepository;
+import com.infenion.ccmadataservices.repositories.*;
 import com.infenion.ccmamodel.model.*;
 //import com.sun.deploy.cache.CacheEntry;
 import org.apache.commons.lang.ObjectUtils;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,26 +27,35 @@ public class RequestActionService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private  ProjectRoleRepository projectRoleRepository;
+
+
 
     public Request saveAsDraft(Request request) throws MessagingException {
 
         Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
-        // TODO :: replace address  with project manager address
-        mailService.sendMail("nabilmokhtar15@gmail.com",r.getRequester().getUserName()
-                , r.getProject().getName(),r.getRequester().getId(),r.getProject().getId(),r.getId(),
-                r.getSystemAccess().getAccessPermission().toString(),r.getSystemAccess().getSystemName().toString());
-        return r ;
+
+        return getRequest(r);
     }
 
     public Request submit(Request request) throws MessagingException {
+
         Request r=changeStatusAndUpdate(request, Status.PENDING,false);
-        // TODO :: replace address  with project manager address
-        mailService.sendMail("nabilmokhtar15@gmail.com",r.getRequester().getUserName()
-                , r.getProject().getName(),r.getRequester().getId(),r.getProject().getId(),r.getId(),
-                r.getSystemAccess().getAccessPermission().toString(),r.getSystemAccess().getSystemName().toString());
 
-        return r;
+        return getRequest(r);
 
+    }
+
+    private Request getRequest(Request request) throws MessagingException {
+        List<ProjectRole> managers= projectRoleRepository.findByProject(request.getProject());
+
+        for (ProjectRole p :managers) {
+            if (p.getRole().toString()=="MANAGER") {
+                mailService.sendMail(p.getRequester().getEmail(),request);
+            }
+        }
+        return request;
     }
 
     public Request execute(Request request)  {
