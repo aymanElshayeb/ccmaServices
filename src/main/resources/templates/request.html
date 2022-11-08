@@ -6,37 +6,58 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-  <title>Request </title>
 </head>
 <body>
 
-<div class="w3-container">
-  <h2>Project Name : <b th:text="${ProjectName}"></b></h2>
 
-  <div class="w3-card-4 w3-dark-grey" style="width:50%">
+<div class="container" style="background: rgba(95,134,155,0.3) ">
 
-    <div class="w3-container w3-center">
+  <img src="https://www.infineon.com/frontend/release_2022-10-1/dist/resources/img/logo-desktop-en.png"  style="width:124px; height:60px; float: right; padding: 4px;">
+
+
+
+  <div class="inner container" style="width:70%;margin-left: auto;margin-right: auto; padding: 9px" >
+    <h2>Project Name : <b th:text="${ProjectName}"></b></h2>
+    <div class="buttons" style="margin-left: auto;margin-right: auto" >
       <h3>
-        Requester : <b th:text="${requesterName}" ></b>
+        Requester <b th:text="${requesterName}" ></b>
         wants to have <b th:text="${accessPermission}"></b>
         access on <b th:text="${systemName}"></b>
-        system of Project : <b th:text="${ProjectName}"></b>
+        system of Project <b th:text="${ProjectName}"></b>
       </h3>
 
 
-      <img src="https://www.infineon.com/frontend/release_2022-10-1/dist/resources/img/logo-desktop-en.png" alt="Avatar" style="width:80%">
 
 
-      <div class="w3-section">
-        <button class="w3-button w3-green">Approve</button>
-        <button class="w3-button w3-red" href="${pageContext.servletContext.contextPath}/requestAction/returnToRequesterFormMail/1">ReturnToRequester</button>
 
-        <form action="${pageContext.servletContext.contextPath}/requestAction/returnToRequesterFormMail/" method="POST">
-          <input type="number" id="request" name="request"><br>
-          <button>Submit</button>
-        </form>
+      <div class="section">
+
+
+
+
+        <table width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <table cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="border-radius: 2px;" bgcolor="#458847">
+                    <a href="http://localhost:8090/requestAction/executeFromMail/1" target="_blank" style="padding: 8px 12px; border: 1px solid #48ab4e;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:530;display: inline-block;">
+                      Approve
+                    </a>
+                  </td>
+                  <td style="border-radius: 2px;" bgcolor="#8b0000;">
+                    <a href="http://localhost:8090/requestAction/returnToRequesterFormMail/1" target="_blank" style="padding: 8px 12px; border: 1px solid #be2525;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:530;display: inline-block;">
+                      Return To Requester
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+
+        </table>
 
       </div>
     </div>
@@ -46,4 +67,6 @@
 
 
 </body>
+
+
 </html>
