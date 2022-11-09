@@ -33,6 +33,7 @@ public class RequestActionService {
 
 
     public Request saveAsDraft(Request request) throws MessagingException {
+        return changeStatusAndUpdate(request, Status.DRAFT,true);
 
         Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
 
@@ -42,12 +43,11 @@ public class RequestActionService {
     public Request submit(Request request) throws MessagingException {
 
         Request r=changeStatusAndUpdate(request, Status.PENDING,false);
-
-        return getRequest(r);
+        return sendNotification(r);
 
     }
 
-    private Request getRequest(Request request) throws MessagingException {
+    private Request sendNotification(Request request) throws MessagingException {
         List<ProjectRole> managers= projectRoleRepository.findByProject(request.getProject());
 
         for (ProjectRole p :managers) {
