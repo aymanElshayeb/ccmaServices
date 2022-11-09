@@ -17,9 +17,9 @@ public class RequesterDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Requester requester = requesterService.findByUserName(username);
-        if(requester == null) throw new UsernameNotFoundException("User nNot found");
+        if(requester == null) throw new UsernameNotFoundException("User Not found");
         UserDetails user = User.withUsername(requester.getUserName())
-                .password(requester.getPassword())
+                .password(requester.getPassword()).authorities("REQUESTER")
                 .build();
 
         return user;
