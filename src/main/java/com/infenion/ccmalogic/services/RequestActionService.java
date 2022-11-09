@@ -35,9 +35,6 @@ public class RequestActionService {
     public Request saveAsDraft(Request request) throws MessagingException {
         return changeStatusAndUpdate(request, Status.DRAFT,true);
 
-        Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
-
-        return getRequest(r);
     }
 
     public Request submit(Request request) throws MessagingException {
