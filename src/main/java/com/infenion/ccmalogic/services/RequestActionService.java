@@ -45,12 +45,18 @@ public class RequestActionService {
     }
 
     private Request sendNotification(Request request) throws MessagingException {
-        List<ProjectRole> managers= projectRoleRepository.findByProject(request.getProject());
 
-        for (ProjectRole p :managers) {
-            if (p.getRole().toString()=="MANAGER") {
-                mailService.sendMail(p.getRequester().getEmail(),request);
+
+        if (request.getStatus()==Status.PENDING) {     //from requester to manager
+            List<ProjectRole> managers = projectRoleRepository.findByProject(request.getProject());
+
+            for (ProjectRole p : managers) {
+                if (p.getRole().toString() == "MANAGER") {
+                    mailService.sendMail(p.getRequester().getEmail(), request);
+                }
             }
+        } else if (request.getStatus()==Status.COMPLETED ||request.getStatus()==Status.DRAFT) {    //from manager to requester
+            mailService.sendMail(request.getRequester().getEmail(),request);
         }
         return request;
     }
@@ -118,9 +124,10 @@ public class RequestActionService {
     public Request returnToRequester(Request request) {
         return changeStatusAndUpdate(request, Status.DRAFT, false);
     }
-    public Request returnToRequesterFromMail(Long request) {
+    public Request returnToRequesterFromMail(Long request) throws MessagingException {
         Request r=requestRepository.findById(request).get();
-        return changeStatusAndUpdate(r, Status.DRAFT, false);
+        r=changeStatusAndUpdate(r, Status.DRAFT, false);
+        return sendNotification(r);
     }
 
 
@@ -130,7 +137,8 @@ public class RequestActionService {
         Request r=requestRepository.findById(request).get();
         try{
             executionService.execute(r);
-            return changeStatusAndUpdate(r, Status.COMPLETED, false);
+            r=changeStatusAndUpdate(r, Status.COMPLETED, false);
+            return sendNotification(r);
         } catch(Exception ex){
             return changeStatusAndUpdate(r, Status.PENDING, false);
         }
