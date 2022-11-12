@@ -32,7 +32,7 @@ public class RequestActionService {
 
 
 
-    public Request saveAsDraft(Request request) throws MessagingException {
+    public Request saveAsDraft(Request request)  {
         return changeStatusAndUpdate(request, Status.DRAFT,true);
 
     }
