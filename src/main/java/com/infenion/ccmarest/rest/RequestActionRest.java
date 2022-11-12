@@ -14,7 +14,7 @@ public class RequestActionRest {
     private RequestActionService requestActionService;
 
     @PostMapping("/saveAsDraft/")
-    public Request saveAsDraft(@RequestBody  Request request) throws MessagingException {
+    public Request saveAsDraft(@RequestBody  Request request) {
          return requestActionService.saveAsDraft( request);
     }
     @PostMapping("/submit/")
