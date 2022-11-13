@@ -22,7 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/requester/register").permitAll()
                         .anyRequest().authenticated()
