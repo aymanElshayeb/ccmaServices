@@ -13,6 +13,12 @@ public class Requester extends BaseEntity{
     private String userName;
     private String email;
     private String fullName;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -57,5 +63,12 @@ public class Requester extends BaseEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
