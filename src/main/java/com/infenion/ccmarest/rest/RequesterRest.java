@@ -27,7 +27,7 @@ public class RequesterRest {
     public List<Requester> getRequestersByUsernameContains(@PathVariable("requesterUserName") String requesterUserName) {
         return requesterService.findByUserNameContains(requesterUserName);
     }
-    @PostMapping("/")
+    @PostMapping("/register")
     public Requester save(Requester requester) {
         return requesterService.save(requester);
     }
