@@ -40,6 +40,7 @@ public class MailService {
 
         helper.setText(process, true);
         helper.setTo(address);
+        helper.setFrom("ccma@infineon.com");
         javaMailSender.send(mimeMessage);
 
         return "Sent";
