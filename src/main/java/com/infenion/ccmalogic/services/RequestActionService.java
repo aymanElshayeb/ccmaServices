@@ -45,6 +45,7 @@ public class RequestActionService {
         Request r=changeStatusAndUpdate(request, Status.PENDING,true);
         return sendNotification(r,emailFeatureActivation);
 
+
     }
 
     private Request sendNotification(Request request,Boolean active) throws MessagingException {
