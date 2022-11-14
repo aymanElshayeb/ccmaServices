@@ -1,5 +1,6 @@
 package com.infenion.ccmalogic.services;
 import com.infenion.ccmamodel.model.Request;
+import com.infenion.ccmamodel.model.Status;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class MailService {
 
 
     public String sendMail(String address , Request request) throws MessagingException {
+        String process=null;
+        String subject=null;
         Context context = new Context();
         context.setVariable("projectId", request.getProject().getId());
         context.setVariable("requestId", request.getId());
@@ -32,11 +35,20 @@ public class MailService {
         context.setVariable("ProjectName", request.getProject().getName());
         context.setVariable("accessPermission", request.getSystemAccess().getAccessPermission().toString());
         context.setVariable("systemName",  request.getSystemAccess().getSystemName().toString());
+        context.setVariable("requestStatus",request.getStatus());
 
-        String process = templateEngine.process("request", context);
+        if (request.getStatus()== Status.PENDING) {
+            process = templateEngine.process("managerMail", context);
+            subject = "Access request for project : " + request.getProject().getName() + " from " + request.getRequester().getUserName();
+        } else if (request.getStatus()== Status.COMPLETED || request.getStatus()== Status.DRAFT) {
+            process = templateEngine.process("requesterMail", context);
+            subject = "Response for access request for project : " + request.getProject().getName() ;
+        }
+
+
         javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
-        helper.setSubject("Access request for project : "+request.getProject().getName()+" from "+request.getRequester().getUserName());
+        helper.setSubject(subject);
 
         helper.setText(process, true);
         helper.setTo(address);

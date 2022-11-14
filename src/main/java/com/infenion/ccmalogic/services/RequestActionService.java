@@ -5,6 +5,8 @@ import com.infenion.ccmamodel.model.*;
 //import com.sun.deploy.cache.CacheEntry;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class RequestActionService {
     @Autowired
     RequestRepository requestRepository;
@@ -30,34 +33,39 @@ public class RequestActionService {
     @Autowired
     private  ProjectRoleRepository projectRoleRepository;
 
+    @Value("${emailFeatureActivation}")
+    private Boolean emailFeatureActivation;
+    public Request saveAsDraft(Request request)  {
+        return changeStatusAndUpdate(request, Status.DRAFT,true);
 
-
-    public Request saveAsDraft(Request request) throws MessagingException {
-
-        Request r=changeStatusAndUpdate(request, Status.DRAFT,true);
-
-        return getRequest(r);
     }
 
     public Request submit(Request request) throws MessagingException {
 
         Request r=changeStatusAndUpdate(request, Status.PENDING,true);
+        return sendNotification(r,emailFeatureActivation);
 
-        return getRequest(r);
 
     }
 
-    private Request getRequest(Request request) throws MessagingException {
-        List<ProjectRole> managers= projectRoleRepository.findByProject(request.getProject());
+    private Request sendNotification(Request request,Boolean active) throws MessagingException {
 
-        for (ProjectRole p :managers) {
-            if (p.getRole().toString()=="MANAGER") {
-                mailService.sendMail(p.getRequester().getEmail(),request);
+        if (active) {
+            if (request.getStatus() == Status.PENDING) {     //from requester to manager
+                List<ProjectRole> managers = projectRoleRepository.findByProject(request.getProject());
+
+                for (ProjectRole p : managers) {
+                    if (p.getRole().toString() == "MANAGER") {
+                        mailService.sendMail(p.getRequester().getEmail(), request);
+                    }
+                }
+            } else if (request.getStatus() == Status.COMPLETED || request.getStatus() == Status.DRAFT) {    //from manager to requester
+                mailService.sendMail(request.getRequester().getEmail(), request);
             }
+
         }
         return request;
     }
-
     public Request execute(Request request)  {
         try{
             executionService.execute(request);
@@ -121,9 +129,10 @@ public class RequestActionService {
     public Request returnToRequester(Request request) {
         return changeStatusAndUpdate(request, Status.DRAFT, false);
     }
-    public Request returnToRequesterFromMail(Long request) {
+    public Request returnToRequesterFromMail(Long request) throws MessagingException {
         Request r=requestRepository.findById(request).get();
-        return changeStatusAndUpdate(r, Status.DRAFT, false);
+        r=changeStatusAndUpdate(r, Status.DRAFT, false);
+        return sendNotification(r,emailFeatureActivation);
     }
 
 
@@ -133,7 +142,8 @@ public class RequestActionService {
         Request r=requestRepository.findById(request).get();
         try{
             executionService.execute(r);
-            return changeStatusAndUpdate(r, Status.COMPLETED, false);
+            r=changeStatusAndUpdate(r, Status.COMPLETED, false);
+            return sendNotification(r,emailFeatureActivation);
         } catch(Exception ex){
             return changeStatusAndUpdate(r, Status.PENDING, false);
         }
