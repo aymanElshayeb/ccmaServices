@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 public class Requester extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String userName;
     private String email;

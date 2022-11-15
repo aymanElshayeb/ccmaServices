@@ -126,8 +126,8 @@ public class RequestActionService {
         return request;
     }
 
-    public Request returnToRequester(Request request) {
-        return changeStatusAndUpdate(request, Status.DRAFT, false);
+    public Request returnToRequester(Request request) throws MessagingException {
+        return changeStatusAndUpdate(sendNotification(request,emailFeatureActivation), Status.DRAFT, true);
     }
     public Request returnToRequesterFromMail(Long request) throws MessagingException {
         Request r=requestRepository.findById(request).get();

@@ -27,7 +27,7 @@ public class RequestActionRest {
          return requestActionService.execute(request);
     }
     @PostMapping("/returnToRequester/")
-    public Request returnToRequester(@RequestBody  Request request){
+    public Request returnToRequester(@RequestBody  Request request) throws MessagingException {
          return requestActionService.returnToRequester(request);
     }
 
