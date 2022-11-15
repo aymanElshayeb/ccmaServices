@@ -14,7 +14,7 @@ public class RequestActionRest {
     private RequestActionService requestActionService;
 
     @PostMapping("/saveAsDraft/")
-    public Request saveAsDraft(@RequestBody  Request request) throws MessagingException {
+    public Request saveAsDraft(@RequestBody  Request request) {
          return requestActionService.saveAsDraft( request);
     }
     @PostMapping("/submit/")
@@ -33,15 +33,15 @@ public class RequestActionRest {
 
     @GetMapping("/returnToRequesterFormMail/{request}")
 
-    public Request returnToRequester(@PathVariable  String request){
-        return requestActionService.returnToRequesterFromMail(Long.parseLong(request));
+    public void returnToRequester(@PathVariable  String request) throws MessagingException {
+        requestActionService.returnToRequesterFromMail(Long.parseLong(request));
     }
 
 
     @GetMapping("/executeFromMail/{request}")
-    public Request executeFromMail(@PathVariable  Request request) {
+    public void executeFromMail(@PathVariable  String request) {
 
-        return requestActionService.execute(request);
+         requestActionService.executeFromMail(Long.parseLong(request));
     }
 
 }
