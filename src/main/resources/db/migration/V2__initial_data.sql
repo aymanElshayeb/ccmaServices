@@ -1,6 +1,6 @@
 ---------------------------------- Project-------------------------
-INSERT INTO Project (ID, name, jira_id, read_role_id, write_role_id, admin_role_id)
- VALUES (default, 'CTRX Radar Family [CTRXFAMILY]', '68500', '11800', '10001', '10002');
+INSERT INTO Project (ID, name, jira_id, read_role_id, write_role_id, admin_role_id, sp_application_id,sp_instance_id, sp_project_id,sp_read_role_id, sp_write_id,sp_admin_role_id)
+ VALUES (default, 'CTRX Radar Family [CTRXFAMILY]', '68500', '11800', '10001', '10002','11','15','411600','337980323','337980322','337980329');
 
 ---------------------------------- Requester-------------------------
 INSERT INTO Requester (ID, user_name, email, full_name, password,role)

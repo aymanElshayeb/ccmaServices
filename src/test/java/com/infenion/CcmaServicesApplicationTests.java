@@ -1,6 +1,6 @@
 package com.infenion;
 
-import com.infenion.ccmalogic.services.ExecutionService;
+import com.infenion.ccmaIntegeration.services.JiraExecutionService;
 import com.infenion.ccmamodel.model.Project;
 import com.infenion.ccmamodel.model.Request;
 import com.infenion.ccmamodel.model.Requester;
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CcmaServicesApplicationTests {
 
     @Autowired
-    ExecutionService executionService;
+    JiraExecutionService executionService;
     @Test
     void contextLoads() {
     }
