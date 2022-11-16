@@ -1,11 +1,15 @@
  package com.infenion.ccmalogic.services;
 
+import com.infenion.ccmaIntegeration.services.ExecutionService;
 import com.infenion.ccmaIntegeration.services.JiraExecutionService;
+import com.infenion.ccmaIntegeration.services.SPExecutionService;
 import com.infenion.ccmadataservices.repositories.*;
 import com.infenion.ccmamodel.model.*;
 //import com.sun.deploy.cache.CacheEntry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +23,8 @@ import java.util.Optional;
 public class RequestActionService {
     @Autowired
     RequestRepository requestRepository;
-    @Autowired
-    JiraExecutionService executionService;
+    @Qualifier("SPExecutionService")
+    ExecutionService executionService;
     @Autowired
     MailService mailService;
     @Autowired
