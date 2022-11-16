@@ -11,9 +11,7 @@ import com.infenion.ccmamodel.model.Requester;
 import com.infenion.ccmamodel.model.SystemAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -26,6 +24,10 @@ import java.net.URISyntaxException;
 public class SPExecutionService implements ExecutionService {
     @Value("${sp.url}")
     String spURL;
+    @Value("${sp.username}")
+    String spUserName;
+    @Value("${sp.password}")
+    String spPassword;
     @Autowired
     private ProjectService projectService;
     @Autowired
@@ -42,31 +44,42 @@ public class SPExecutionService implements ExecutionService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth(requester.getUserName(), requester.getPassword());
+        headers.setBasicAuth(spUserName, spPassword);
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        String userId = fetchUserId(requester);
-        map.add("id",userId );
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+        SPRequester[] requesterList = fetchUserId(requester);
 
-        URI jiraURI = new URI(String.format(spURL + "/applications/%s/instances/%s/projects/%s/roles/%s/users",
+
+        URI spURI = new URI(getAddRoleRequestURL(project, systemAccess));
+        HttpEntity<SPRequester[]> requestEntity = new HttpEntity<>(requesterList, headers);
+
+        ResponseEntity<String> response =restTemplate.exchange(spURI,  HttpMethod.POST, requestEntity, String.class);
+        System.out.println(response.getBody());
+        return response.getBody();
+    }
+
+    private String getAddRoleRequestURL(Project project, SystemAccess systemAccess) {
+        String url = String.format(spURL + "/applications/%s/instances/%s/projects/%s/roles/%s/users",
                 project.getSpApplicationId(),
                 project.getSpInstanceId(),
                 project.getSpProjectId(),
-                project.getSpRoleId(systemAccess.getAccessPermission())));
-
-        return restTemplate.postForObject(jiraURI, entity, String.class);
+                project.getSpRoleId(systemAccess.getAccessPermission()));
+        return url;
     }
 
-    private String fetchUserId(Requester requester) throws URISyntaxException {
+    private SPRequester[] fetchUserId(Requester requester) throws URISyntaxException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth(requester.getUserName(), requester.getPassword());
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
-        URI spURI = new URI(String.format(spURL + "/rest/ad/users?username=%s",requester.getUserName()));
-        SPRequester[] spRequesterList = restTemplate.getForObject(spURI, SPRequester[].class);
-        return spRequesterList[0].getId();
+        headers.setBasicAuth(spUserName,spPassword);
+        String spUrlRequest = String.format(spURL + "/ad/users?username=%s",requester.getUserName());
+        URI spURI = new URI(spUrlRequest);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<SPRequester[]> response =restTemplate.exchange(spURI,  HttpMethod.GET, requestEntity, SPRequester[].class);
+        if(response.getStatusCode().is2xxSuccessful()){
+            SPRequester[] spRequesterList = response.getBody();
+            return  spRequesterList;
+        }
+        return null;
     }
 
 

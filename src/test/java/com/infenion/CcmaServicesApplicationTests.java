@@ -1,6 +1,7 @@
 package com.infenion;
 
 import com.infenion.ccmaIntegeration.services.JiraExecutionService;
+import com.infenion.ccmaIntegeration.services.SPExecutionService;
 import com.infenion.ccmamodel.model.Project;
 import com.infenion.ccmamodel.model.Request;
 import com.infenion.ccmamodel.model.Requester;
@@ -13,12 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CcmaServicesApplicationTests {
 
     @Autowired
-    JiraExecutionService executionService;
+    SPExecutionService executionService;
     @Test
     void contextLoads() {
     }
 
-    void addWriteAccessJiraTest() throws Exception {
+    void addWriteAccessToSPTest() throws Exception {
         Request request = new Request();
         Project project = new Project();
         Requester requester = new Requester();

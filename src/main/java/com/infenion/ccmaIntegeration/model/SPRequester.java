@@ -1,12 +1,13 @@
 package com.infenion.ccmaIntegeration.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.infenion.ccmamodel.model.BaseEntity;
 
 import javax.persistence.*;
 
-@Entity
+
 public class SPRequester extends BaseEntity {
-    @Id
+    @JsonProperty("Id")
     private String id;
 
     public String getId() {
