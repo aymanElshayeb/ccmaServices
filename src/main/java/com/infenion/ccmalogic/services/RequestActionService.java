@@ -67,9 +67,11 @@ public class RequestActionService {
         return request;
     }
     public Request execute(Request request)  {
-        try{ System.out.println("execute "+request);
+        try{
+              System.out.println("execute ");
 //            executionService.execute(request);
-            return changeStatusAndUpdate(request, Status.COMPLETED, false);
+            Request r = changeStatusAndUpdate(request, Status.COMPLETED, false);
+            return sendNotification(r,emailFeatureActivation);
         } catch(Exception ex){
             return changeStatusAndUpdate(request, Status.PENDING, false);
         }
@@ -141,7 +143,8 @@ public class RequestActionService {
     public Request executeFromMail(Long request)  {
         Request r=requestRepository.findById(request).get();
         try{
-            executionService.execute(r);
+            System.out.println("execute "+request);
+//            executionService.execute(request);
             r=changeStatusAndUpdate(r, Status.COMPLETED, false);
             return sendNotification(r,emailFeatureActivation);
         } catch(Exception ex){
