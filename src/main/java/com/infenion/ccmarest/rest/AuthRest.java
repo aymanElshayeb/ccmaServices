@@ -26,7 +26,7 @@ public class AuthRest {
         return requesterService.findByUserName(auth.getName());
     }
     @GetMapping("/logout")
-    public void login(HttpServletRequest request) throws ServletException {
+    public void logout(HttpServletRequest request) throws ServletException {
         request.logout();
     }
 }

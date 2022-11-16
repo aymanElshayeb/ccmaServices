@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+
+import javax.ws.rs.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -22,13 +25,15 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and()
-                .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/requester/register").permitAll()
-                        .anyRequest().authenticated()
-                )
+        http.httpBasic().and()
+                .csrf().disable()
                 .userDetailsService(requesterDetailService)
-                .httpBasic(Customizer.withDefaults());
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/requester/register").permitAll()
+                .anyRequest().fullyAuthenticated()
+
+                ;
         return http.build();
     }
     @Bean
