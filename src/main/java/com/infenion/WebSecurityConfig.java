@@ -24,18 +24,11 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeHttpRequests((requests) -> requests
-                        .antMatchers(HttpMethod.POST).authenticated()
-                        .antMatchers("/requester/register").permitAll()
-                        .antMatchers("/requestAction/returnToRequesterFormMail/{request}").permitAll()
-                        .antMatchers("/requestAction/executeFromMail/{request}").permitAll()
 
-                        .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
-                )
-                .userDetailsService(requesterDetailService)
-                .httpBasic(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults()).cors().disable().userDetailsService(requesterDetailService)
+                .authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+
+
         return http.build();
     }
     @Bean
