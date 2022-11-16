@@ -28,7 +28,7 @@ public class RequesterRest {
         return requesterService.findByUserNameContains(requesterUserName);
     }
     @PostMapping("/register")
-    public Requester save(Requester requester) {
+    public Requester save(@RequestBody Requester requester) {
         return requesterService.save(requester);
     }
     @PutMapping ("/")
