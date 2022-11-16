@@ -25,7 +25,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.httpBasic().and()
+        http.httpBasic().and().cors().and()
                 .csrf().disable()
                 .userDetailsService(requesterDetailService)
                 .authorizeRequests()

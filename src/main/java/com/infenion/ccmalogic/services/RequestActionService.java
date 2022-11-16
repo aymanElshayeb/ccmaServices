@@ -67,8 +67,8 @@ public class RequestActionService {
         return request;
     }
     public Request execute(Request request)  {
-        try{
-            executionService.execute(request);
+        try{ System.out.println("execute "+request);
+//            executionService.execute(request);
             return changeStatusAndUpdate(request, Status.COMPLETED, false);
         } catch(Exception ex){
             return changeStatusAndUpdate(request, Status.PENDING, false);
