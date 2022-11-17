@@ -5,7 +5,13 @@ CREATE TABLE Project (
                            jira_id varchar(255),
                            read_role_id varchar(255),
                            write_role_id varchar(255),
-                           admin_role_id varchar(255)
+                           admin_role_id varchar(255),
+                           sp_application_id varchar(255),
+                           sp_instance_id varchar(255),
+                           sp_project_id varchar(255),
+                           sp_read_role_id varchar(255),
+                           sp_write_id varchar(255),
+                           sp_admin_role_id varchar(255)
 );
 
 CREATE TABLE Requester (

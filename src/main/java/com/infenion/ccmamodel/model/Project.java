@@ -19,6 +19,22 @@ public class Project extends BaseEntity {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String adminRoleId;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String spApplicationId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String spInstanceId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String spProjectId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String spReadRoleId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String spWriteId;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String spAdminRoleId;
 
     public Project() {
     }
@@ -54,5 +70,37 @@ public class Project extends BaseEntity {
             case ADMIN: return this.adminRoleId;
             default: return null;
         }
+    }
+    public String getSpRoleId(AccessPermission accessPermission) {
+        switch (accessPermission){
+            case READ: return this.spReadRoleId;
+            case WRITE: return this.spWriteId;
+            case ADMIN: return this.spAdminRoleId;
+            default: return null;
+        }
+    }
+
+    public String getSpApplicationId() {
+        return spApplicationId;
+    }
+
+    public void setSpApplicationId(String spApplicationId) {
+        this.spApplicationId = spApplicationId;
+    }
+
+    public String getSpInstanceId() {
+        return spInstanceId;
+    }
+
+    public void setSpInstanceId(String spInstanceId) {
+        this.spInstanceId = spInstanceId;
+    }
+
+    public String getSpProjectId() {
+        return spProjectId;
+    }
+
+    public void setSpProjectId(String spProjectId) {
+        this.spProjectId = spProjectId;
     }
 }
