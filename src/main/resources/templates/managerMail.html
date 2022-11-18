@@ -42,12 +42,12 @@
               <table cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="border-radius: 2px;" bgcolor="#458847">
-                    <a href="http://localhost:8090/requestAction/executeFromMail/1" target="_blank" style="padding: 8px 12px; border: 1px solid #48ab4e;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:530;display: inline-block;">
+                    <a th:href="@{'http://localhost:8090/requestAction/executeFromMail/'+${requestId} }" target="_blank" style="padding: 8px 12px; border: 1px solid #48ab4e;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:530;display: inline-block;">
                       Approve
                     </a>
                   </td>
                   <td style="border-radius: 2px;" bgcolor="#8b0000;">
-                    <a href="http://localhost:8090/requestAction/returnToRequesterFormMail/1" target="_blank" style="padding: 8px 12px; border: 1px solid #be2525;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:530;display: inline-block;">
+                    <a th:href="@{'http://localhost:8090/requestAction/returnToRequesterFormMail/'+${requestId} }" target="_blank" style="padding: 8px 12px; border: 1px solid #48ab4e;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:530;display: inline-block;">
                       Return To Requester
                     </a>
                   </td>
@@ -58,7 +58,6 @@
 
 
         </table>
-
       </div>
     </div>
 
