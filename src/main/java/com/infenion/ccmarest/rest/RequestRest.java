@@ -20,7 +20,7 @@ public class RequestRest {
     }
     @GetMapping("/")
     public List<Request> getAllRequests() {
-        return requestService.findAll();
+        return requestService.findCurrentUserRequests();
     }
     @PostMapping("/")
     public Request save(@RequestBody Request request) {

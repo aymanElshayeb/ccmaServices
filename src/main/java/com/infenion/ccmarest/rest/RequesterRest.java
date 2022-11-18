@@ -21,7 +21,7 @@ public class RequesterRest {
     }
     @GetMapping("/")
     public List<Requester> findAll() {
-        return requesterService.findAll();
+        return requesterService.findCurrentUserRequesterList();
     }
     @GetMapping("/contains/{requesterUserName}")
     public List<Requester> getRequestersByUsernameContains(@PathVariable("requesterUserName") String requesterUserName) {
