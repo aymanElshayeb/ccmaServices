@@ -73,8 +73,8 @@ public class RequestActionService {
     }
     public Request execute(Request request) throws Exception {
         try{
-//              System.out.println("execute ");
-           executionService.execute(request);
+              System.out.println("execute ");
+//           executionService.execute(request);
             Request r = changeStatusAndUpdate(request, Status.COMPLETED, false);
             return sendNotification(r,emailFeatureActivation);
         } catch(Exception ex){
@@ -135,7 +135,8 @@ public class RequestActionService {
     }
 
     public Request returnToRequester(Request request) throws MessagingException {
-        return changeStatusAndUpdate(sendNotification(request,emailFeatureActivation), Status.DRAFT, true);
+        Request r = changeStatusAndUpdate(request, Status.DRAFT, false);
+        return sendNotification(r, emailFeatureActivation);
     }
     public Request returnToRequesterFromMail(Long request) throws MessagingException {
         Request r=requestRepository.findById(request).get();
