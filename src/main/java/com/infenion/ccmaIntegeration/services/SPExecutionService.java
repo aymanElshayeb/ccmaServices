@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Service("SPExecutionService")
+@Service
 public class SPExecutionService implements ExecutionService {
     @Value("${sp.url}")
     String spURL;

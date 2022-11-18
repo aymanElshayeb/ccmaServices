@@ -31,6 +31,8 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/requester/register").permitAll()
+                .antMatchers("/h2-console/").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 ;
