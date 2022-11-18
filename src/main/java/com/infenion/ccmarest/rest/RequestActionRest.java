@@ -23,7 +23,7 @@ public class RequestActionRest {
         return requestActionService.submit( request);
     }
     @PostMapping("/execute/")
-    public Request execute(@RequestBody  Request request) {
+    public Request execute(@RequestBody  Request request) throws Exception {
          return requestActionService.execute(request);
     }
     @PostMapping("/returnToRequester/")

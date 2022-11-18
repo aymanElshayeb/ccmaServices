@@ -23,6 +23,7 @@ import java.util.Optional;
 public class RequestActionService {
     @Autowired
     RequestRepository requestRepository;
+    @Autowired
     @Qualifier("SPExecutionService")
     ExecutionService executionService;
     @Autowired
@@ -70,14 +71,15 @@ public class RequestActionService {
         }
         return request;
     }
-    public Request execute(Request request)  {
+    public Request execute(Request request) throws Exception {
         try{
-              System.out.println("execute ");
-//            executionService.execute(request);
+//              System.out.println("execute ");
+           executionService.execute(request);
             Request r = changeStatusAndUpdate(request, Status.COMPLETED, false);
             return sendNotification(r,emailFeatureActivation);
         } catch(Exception ex){
-            return changeStatusAndUpdate(request, Status.PENDING, false);
+            changeStatusAndUpdate(request, Status.PENDING, false);
+            throw ex;
         }
 
     }

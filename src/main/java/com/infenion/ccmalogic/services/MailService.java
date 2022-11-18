@@ -1,6 +1,7 @@
 package com.infenion.ccmalogic.services;
 import com.infenion.ccmamodel.model.Request;
 import com.infenion.ccmamodel.model.Status;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,8 @@ import javax.mail.MessagingException;
 
 @Service
 public class MailService {
-
+    @Value("${mail.default.sender}")
+    private String defaultSender;
     private final TemplateEngine templateEngine;
 
     private final JavaMailSender javaMailSender;
@@ -51,6 +53,7 @@ public class MailService {
         helper.setSubject(subject);
 
         helper.setText(process, true);
+        helper.setFrom(defaultSender);
         helper.setTo(address);
         javaMailSender.send(mimeMessage);
 
