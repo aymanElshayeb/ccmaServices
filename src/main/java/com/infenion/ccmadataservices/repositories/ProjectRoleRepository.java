@@ -2,6 +2,7 @@ package com.infenion.ccmadataservices.repositories;
 
 import com.infenion.ccmamodel.model.Project;
 import com.infenion.ccmamodel.model.ProjectRole;
+import com.infenion.ccmamodel.model.Requester;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,6 @@ import java.util.List;
 public interface ProjectRoleRepository extends JpaRepository<ProjectRole, Long> {
 
     List<ProjectRole> findByProject(Project project);
+
+    List<ProjectRole> findByRequester(Requester requester);
 }
