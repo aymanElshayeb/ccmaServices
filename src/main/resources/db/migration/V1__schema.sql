@@ -40,15 +40,6 @@ CREATE TABLE Project_Role (
                            FOREIGN KEY (project_id ) REFERENCES PROJECT(ID)
 );
 
-CREATE TABLE Requester_Access (
-                              ID bigint auto_increment PRIMARY KEY,
-                              requester_id bigint,
-                              system_access_id bigint,
-                              FOREIGN KEY (requester_id ) REFERENCES REQUESTER(ID),
-                              FOREIGN KEY (system_access_id ) REFERENCES System_Access(ID)
-);
-
-
 CREATE TABLE Request (
     ID bigint auto_increment PRIMARY KEY ,
     requester_id bigint,

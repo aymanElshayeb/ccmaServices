@@ -4,10 +4,17 @@ INSERT INTO Project (ID, name, jira_id, read_role_id, write_role_id, admin_role_
 
 ---------------------------------- Requester-------------------------
 INSERT INTO Requester (ID, user_name, email, full_name, password,role)
-VALUES (default, 'elshayeb', 'ayman.elshayb@gmail.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123','MANAGER');
+VALUES (default, 'elshayeb', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123','MANAGER');
 
 INSERT INTO Requester (ID, user_name, email, full_name, password,role)
-VALUES (default, 'lnzautomationuser', 'ayman.elshayb@gmail.com','LNZautomationuser None (IFL ATV SC D RAD PJM)','z.Cve%{6p.fjR%o','MEMBER');
+VALUES (default, 'Kampfer', 'Elshayeb.external@infineon.com','Stefan Kampfer','password123','MEMBER');
+
+INSERT INTO Requester (ID, user_name, email, full_name, password,role)
+VALUES (default, 'Scheiblh', 'Elshayeb.external@infineon.com','Klaus Dieter Scheibl hofer','password123','MEMBER');
+
+
+INSERT INTO Requester (ID, user_name, email, full_name, password,role)
+VALUES (default, 'marktlth', 'Elshayeb.external@infineon.com','Thomas Marktl','password123','MEMBER');
 
 --------------------------------------System Access----------------------------------
 INSERT INTO System_Access (ID, system_name, access_permission) VALUES (1, 'JIRA', 'READ');
@@ -18,17 +25,14 @@ INSERT INTO System_Access (ID, system_name, access_permission) VALUES (5, 'SVN',
 INSERT INTO System_Access (ID, system_name, access_permission) VALUES (6, 'SVN', 'ADMIN');
 
 ---------------------------------- Project Role-------------------------
-INSERT INTO PROJECT_ROLE (ID, requester_id, project_id,role) VALUES (1, 1,1,'MEMBER');
-INSERT INTO PROJECT_ROLE (ID, requester_id, project_id,role) VALUES (2, 2,1,'MANAGER');
-
----------------------------------- Project ACCESS-------------------------
-INSERT INTO Requester_Access (ID, requester_id, system_access_id) VALUES (1, 2,3);
-INSERT INTO Requester_Access (ID, requester_id, system_access_id) VALUES (2, 2,6);
-
+INSERT INTO PROJECT_ROLE (ID, requester_id, project_id,role) VALUES (1, 1,1,'MANAGER');
 ------------------------------ Request-------------------------------------
 INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
-VALUES (default, 2, 3, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
+VALUES (default, 2, 1, 'DRAFT',1,'2022-10-20','2022-10-21', 2);
 
 INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
-VALUES (default, 2, 6, 'COMPLETED',1,'2022-10-20','2022-10-21', 2);
+VALUES (default, 3, 2, 'PENDING',1,'2022-10-20','2022-10-21', 3);
+
+INSERT INTO Request (ID, requester_Id, system_access_id, status, project_id, creation_date , last_modified_date, last_modifier_Id)
+VALUES (default, 4, 3, 'COMPLETED',1,'2022-10-20','2022-10-21', 1);
 
