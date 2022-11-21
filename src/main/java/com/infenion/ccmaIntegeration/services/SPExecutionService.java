@@ -60,7 +60,6 @@ public class SPExecutionService implements ExecutionService {
 
         ResponseEntity<String> response =restTemplate.exchange(spURI,  HttpMethod.POST, requestEntity, String.class);
         logger.info("Request Body "+ toString(requesterList) + "\n Response body"+ response.getBody());
-        System.out.println(response.getBody());
         return response.getBody();
     }
 
