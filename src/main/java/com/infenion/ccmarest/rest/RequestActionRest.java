@@ -38,6 +38,8 @@ public class RequestActionRest {
 
     public ModelAndView returnToRequester(@PathVariable  String requestId, Model model) throws MessagingException {
         Request request=requestActionService.returnToRequesterFromMail(Long.parseLong(requestId));
+        model.addAttribute("responseType", "return to requester");
+
         return bindRequestParameters(model, request);
     }
 
@@ -56,6 +58,7 @@ public class RequestActionRest {
     @GetMapping("/executeFromMail/{requestId}")
     public ModelAndView executeFromMail(@PathVariable  String requestId, Model model) {
         Request request=requestActionService.executeFromMail(Long.parseLong(requestId));
+        model.addAttribute("responseType", "Approve");
         return bindRequestParameters(model, request);
     }
 
