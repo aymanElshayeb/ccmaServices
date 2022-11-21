@@ -60,7 +60,7 @@ public class RequestActionService {
                 List<ProjectRole> managers = projectRoleRepository.findByProject(request.getProject());
 
                 for (ProjectRole p : managers) {
-                    if (p.getRole().toString() == "MANAGER") {
+                    if (p.getRole().equals(Role.MANAGER)) {
                         mailService.sendMail(p.getRequester().getEmail(), request);
                     }
                 }
@@ -73,8 +73,8 @@ public class RequestActionService {
     }
     public Request execute(Request request) throws Exception {
         try{
-              System.out.println("execute ");
-//           executionService.execute(request);
+//              System.out.println("execute ");
+           executionService.execute(request);
             Request r = changeStatusAndUpdate(request, Status.COMPLETED, false);
             return sendNotification(r,emailFeatureActivation);
         } catch(Exception ex){
@@ -138,24 +138,24 @@ public class RequestActionService {
         Request r = changeStatusAndUpdate(request, Status.DRAFT, false);
         return sendNotification(r, emailFeatureActivation);
     }
-    public Request returnToRequesterFromMail(Long request) throws MessagingException {
-        Request r=requestRepository.findById(request).get();
-        r=changeStatusAndUpdate(r, Status.DRAFT, false);
-        return sendNotification(r,emailFeatureActivation);
+    public Request returnToRequesterFromMail(Long requestId) throws MessagingException {
+        Request request=requestRepository.findById(requestId).get();
+        request=changeStatusAndUpdate(request, Status.DRAFT, false);
+        return sendNotification(request,emailFeatureActivation);
     }
 
 
 
 
-    public Request executeFromMail(Long request)  {
-        Request r=requestRepository.findById(request).get();
+    public Request executeFromMail(Long requestId)  {
+        Request request=requestRepository.findById(requestId).get();
         try{
-            System.out.println("execute "+request);
-//            executionService.execute(request);
-            r=changeStatusAndUpdate(r, Status.COMPLETED, false);
-            return sendNotification(r,emailFeatureActivation);
+            // System.out.println("execute "+request);
+            executionService.execute(request);
+            request=changeStatusAndUpdate(request, Status.COMPLETED, false);
+            return sendNotification(request,emailFeatureActivation);
         } catch(Exception ex){
-            return changeStatusAndUpdate(r, Status.PENDING, false);
+            return changeStatusAndUpdate(request, Status.PENDING, false);
         }
 
     }

@@ -9,6 +9,9 @@ import com.infenion.ccmamodel.model.Project;
 import com.infenion.ccmamodel.model.Request;
 import com.infenion.ccmamodel.model.Requester;
 import com.infenion.ccmamodel.model.SystemAccess;
+import org.apache.juli.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -19,9 +22,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 @Service
 public class SPExecutionService implements ExecutionService {
+    Logger logger = LoggerFactory.getLogger(SPExecutionService.class);
+
     @Value("${sp.url}")
     String spURL;
     @Value("${sp.username}")
@@ -53,8 +59,13 @@ public class SPExecutionService implements ExecutionService {
         HttpEntity<SPRequester[]> requestEntity = new HttpEntity<>(requesterList, headers);
 
         ResponseEntity<String> response =restTemplate.exchange(spURI,  HttpMethod.POST, requestEntity, String.class);
+        logger.info("Request Body "+ toString(requesterList) + "\n Response body"+ response.getBody());
         System.out.println(response.getBody());
         return response.getBody();
+    }
+
+    private String toString(SPRequester[] requesterList) {
+        return Arrays.stream(requesterList).map(spRequester -> spRequester.toString()).reduce("",(substring,element)-> substring= substring +"\n"+ element );
     }
 
     private String getAddRoleRequestURL(Project project, SystemAccess systemAccess) {

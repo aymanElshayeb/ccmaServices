@@ -4,7 +4,7 @@ INSERT INTO Project (ID, name, jira_id, read_role_id, write_role_id, admin_role_
 
 ---------------------------------- Requester-------------------------
 INSERT INTO Requester (ID, user_name, email, full_name, password,role)
-VALUES (default, 'elshayeb', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123','MANAGER');
+VALUES (default, 'raghavan', 'Elshayeb.external@infineon.com','Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)','password123','MANAGER');
 
 INSERT INTO Requester (ID, user_name, email, full_name, password,role)
 VALUES (default, 'Kampfer', 'Elshayeb.external@infineon.com','Stefan Kampfer','password123','MEMBER');
