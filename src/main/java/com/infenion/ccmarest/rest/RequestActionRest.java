@@ -1,17 +1,18 @@
 package com.infenion.ccmarest.rest;
 
-import com.atlassian.httpclient.api.HttpStatus;
 import com.infenion.ccmamodel.model.Request;
 import com.infenion.ccmalogic.services.RequestActionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/requestAction")
 public class RequestActionRest {
+
     @Autowired
     private RequestActionService requestActionService;
 
@@ -33,19 +34,29 @@ public class RequestActionRest {
          return requestActionService.returnToRequester(request);
     }
 
-    @GetMapping("/returnToRequesterFormMail/{request}")
+    @GetMapping("/returnToRequesterFormMail/{requestId}")
 
-    //todo :: return response entity
-    public ResponseEntity<String> returnToRequester(@PathVariable  String request) throws MessagingException {
-        requestActionService.returnToRequesterFromMail(Long.parseLong(request));
-        return ResponseEntity.ok("request returned");
+    public ModelAndView returnToRequester(@PathVariable  String requestId, Model model) throws MessagingException {
+        Request request=requestActionService.returnToRequesterFromMail(Long.parseLong(requestId));
+        return bindRequestParameters(model, request);
+    }
+
+    private ModelAndView bindRequestParameters(Model model, Request request) {
+        model.addAttribute("ProjectName", request.getProject().getName());
+        model.addAttribute("accessPermission", request.getSystemAccess().getAccessPermission().toString());
+        model.addAttribute("systemName",  request.getSystemAccess().getSystemName().toString());
+        model.addAttribute("requestStatus",request.getStatus());
+        model.addAttribute("requesterName", request.getRequester().getUserName());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("Confirmation");
+        return modelAndView;
     }
 
 
-    @GetMapping("/executeFromMail/{request}")
-    public ResponseEntity<String> executeFromMail(@PathVariable  String request) {
-        requestActionService.executeFromMail(Long.parseLong(request));
-        return ResponseEntity.ok("request approved");
+    @GetMapping("/executeFromMail/{requestId}")
+    public ModelAndView executeFromMail(@PathVariable  String requestId, Model model) {
+        Request request=requestActionService.executeFromMail(Long.parseLong(requestId));
+        return bindRequestParameters(model, request);
     }
 
 }
