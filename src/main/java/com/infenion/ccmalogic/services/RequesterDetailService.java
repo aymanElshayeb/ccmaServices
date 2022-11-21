@@ -18,8 +18,9 @@ public class RequesterDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Requester requester = requesterService.findByUserName(username);
         if(requester == null) throw new UsernameNotFoundException("User Not found");
+
         UserDetails user = User.withUsername(requester.getUserName())
-                .password(requester.getPassword()).authorities("REQUESTER")
+                .password(requester.getPassword()).authorities(requester.getRole().getName())
                 .build();
 
         return user;
